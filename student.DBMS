@@ -1,0 +1,52 @@
+student.DBMS
+create table student(rollno number(5) primary key, name varchar(20), age number(2), bname varchar(5), perc number(5,2));
+
+create table branch(bname varchar(5) primary key, yoe number(4), intake number(3));
+
+insert into student values(520, 'RAVI', 19, 'CSE', 75.5);
+insert into student values(444, 'KUMAR', 18, 'ECE', 78);
+insert into student values(510, 'ANIL', 18, 'CSE', 68.5);
+insert into student values(1244, 'RAVI', 19, 'IT', 70);
+insert into student values(530, 'RAVI', 20, 'CSE', 80);
+insert into student values(420, 'RAMU', 19, 'ECE', 76.5);
+
+insert into branch values('CSE', 2008, 180);
+insert into branch values('IT', 2008, 180);
+insert into branch values('ECE', 2009, 120);
+insert into branch values('EEE', 2010, 60);
+--find the average percentage of students
+select avg(perc)
+    from student;
+--to find the maximum percentage of a student
+select bname,max(perc)
+    from student 
+group by bname;
+--find the no of distinctions branchwise
+select bname,count(*)
+from student
+where perc>=70
+group by bname;
+--find the branch names where the average percentage is more than 60
+select bname
+from student 
+group by bname
+having avg(perc)>60;
+--to find the average pecentage of cse and it  and ece students
+select bname,avg(perc)
+from student 
+group by bname;
+--to find the no of records in the table
+select count(*)
+from student
+--nested queries
+--find the names of students which are studying in the branch started in 2008
+select name
+from student
+    where bname in (select bname 
+				   from branch
+				   where yoe=2008);
+				   --find the names of the students secure highest percentages 
+select name
+from student
+where perc=(select max(perc)
+    		from student);
