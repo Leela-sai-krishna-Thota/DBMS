@@ -1,0 +1,16 @@
+create table R (roll number(4),name varchar(20),perc number(4));
+insert into R values(212,'leela',43);
+insert into R values(912,'praveen',43);
+insert into R values(612,'shankar',43);
+insert into R values(242,'charan',43);
+create view v1 as (select roll,perc 
+		 from R)
+select * 
+from v1
+
+
+insert into R values(354,'sajid',78);
+
+select * 
+from v1
+
