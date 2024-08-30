@@ -1,0 +1,102 @@
+create table student(rollno number(5) primary key, name varchar(20), age number(2), bname varchar(5), perc number(5,2));
+
+create table branch(bname varchar(5) primary key, yoe number(4), intake number(3));
+
+
+insert into student values(520, 'RAVI', 19, 'CSE', 75.5);
+insert into student values(444, 'KUMAR', 18, 'ECE', 78);
+insert into student values(510, 'ANIL', 18, 'CSE', 68.5);
+insert into student values(1244, 'RAVI', 19, 'IT', 70);
+insert into student values(530, 'RAVI', 20, 'CSE', 80);
+insert into student values(420, 'RAMU', 19, 'ECE', 76.5);
+
+insert into branch values('CSE', 2008, 180);
+insert into branch values('IT', 2008, 180);
+insert into branch values('ECE', 2009, 120);
+insert into branch values('EEE', 2010, 60);
+
+/*branchwise avg percentage*/
+select bname,avg(perc)
+from student
+group by bname;
+
+
+/* BRANCHWISE HIGHEST PERCENTAGE*/
+select bname,max(perc)
+from student
+group by bname;
+
+/* find the second highest percentage of the cse students*/
+select max(perc)
+from student
+where bname='CSE' and perc<(select max(perc)
+			  from student
+			  where bname='CSE');
+			  
+			  /* find the second highest percentage*/
+select max(perc)
+from student
+where perc<(select max(perc)
+    		from student);
+    		
+    		/*find the names of cse and it students using set operations*/
+select name
+from student
+where bname='CSE'
+union
+select name
+from student
+where bname='IT';
+
+    		/*find the COMMON names of cse and it students using set operations*/
+select name
+from student
+where bname='CSE'
+intersect
+select name
+from student
+where bname='IT';
+
+
+select bname 
+from branch
+minus
+select distinct bname
+from student;
+
+
+/* find the names of the students studying in the branch started in 2008*/
+
+
+select name
+from student
+where bname in (select bname 
+		from branch
+		where yoe=2008);
+
+/* find the names of the who secure highest percentage*/
+select name
+from student 
+where perc =(select max(perc)
+from student );
+
+
+/* find the student details who percentage is greater than overall average percentage*/
+select *
+from student 
+where perc >(select avg(perc)
+from student );
+
+/* find the student details who percentage is greater than any branch  average percentage*/
+select name
+from student 
+where perc >any (select avg(perc)
+from student 
+group by bname);
+
+/*find the names of the students who are studying in the year of 2008 using natural join */
+select name 
+from student natural join branch
+where yoe=2008;
+
+
