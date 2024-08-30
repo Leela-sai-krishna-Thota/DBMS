@@ -1,0 +1,5 @@
+create table boats (bid number(5),bname varchar(20),colour varchar(10));
+insert into boats values(101,'interlake','blue');
+insert into boats values(102,'interlake','red');
+insert into boats values(103,'clipper','green');
+insert into boats values(104,'marine','red');
